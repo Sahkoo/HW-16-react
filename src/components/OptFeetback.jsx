@@ -1,40 +1,26 @@
-import React from 'react';
-import styled from 'styled-components';
+import React, { useState } from 'react';
 
-const ButtonGroup = styled.div`
-    display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
-`;
+function FeedBack() {
+    const [good, setGood] = useState(0);
+    const [neutral, setNeutral] = useState(0);
+    const [bad, setBad] = useState(0);
 
-const Button = styled.button`
-    padding: 10px 20px;
-    font-size: 16px;
-    background-color: ${({ theme }) => theme.buttonBg};
-    color: white;
-    border: none;
-    border-radius: 6px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
+    const total = good + neutral + bad;
+    const goodPercent = total > 0 ? Math.round((good / total) * 100) : 0;
 
-    &:hover {
-    background-color: ${({ theme }) => theme.buttonHover};
-    }
-`;
-
-function FeedOpt({ options, onLeaveFeedback }) {
     return (
-        <ButtonGroup>
-            {options.map(option => (/* додав стилі, нижче використав метод map для створення кнопок, пройшовшись по масиву */
-                <Button
-                    key={option}
-                    onClick={() => onLeaveFeedback(option)}
-                >
-                    {option}
-                </Button>
-            ))}
-        </ButtonGroup>
+        <>
+            <button onClick={() => setGood(good + 1)}>Good</button>
+            <button onClick={() => setNeutral(neutral + 1)}>Neutral</button>
+            <button onClick={() => setBad(bad + 1)}>Bad</button>
+            <h2>Statistics</h2>
+            <p>Good: {good}</p>
+            <p>Neutral: {neutral}</p>
+            <p>Bad: {bad}</p>
+            <p>Total: {total}</p>
+            <p>Good %: {goodPercent}%</p>
+        </>
     );
 }
 
-export default FeedOpt;
+export default FeedBack;
